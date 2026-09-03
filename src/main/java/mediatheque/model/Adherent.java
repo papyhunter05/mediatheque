@@ -2,12 +2,7 @@ package mediatheque.model;
 
 import java.time.LocalDate;
 
-/**
- * Classe de base pour un adhérent de la médiathèque.
- * Chaque sous-catégorie d'adhérent définit sa propre durée de prêt
- * et son propre quota de documents ; la logique de validation
- * (peutEmprunter) est commune et centralisée ici.
- */
+
 public abstract class Adherent {
 
     private String nom;
