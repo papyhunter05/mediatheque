@@ -14,6 +14,7 @@ public class JeuDeSociete extends Document {
         return nombreJoueursMax;
     }
 
+    @Override
     public int getDureeMaxPretJours() {
         return 21;
     }
