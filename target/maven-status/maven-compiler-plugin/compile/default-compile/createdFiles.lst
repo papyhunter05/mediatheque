@@ -1,0 +1,10 @@
+mediatheque\model\Emprunt.class
+mediatheque\MediathequeApp.class
+mediatheque\model\DVD.class
+mediatheque\model\Document.class
+mediatheque\model\Etudiant.class
+mediatheque\model\Livre.class
+mediatheque\model\Adherent.class
+mediatheque\model\JeuDeSociete.class
+mediatheque\model\Enseignant.class
+mediatheque\Main.class
