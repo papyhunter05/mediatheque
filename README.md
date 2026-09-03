@@ -29,3 +29,7 @@ pour le TP de refactoring / integration continue.
 2. Refactoriser progressivement, un commit par etape
 3. Relancer les tests apres chaque etape
 4. Configurer Jenkins pour builder et tester automatiquement a chaque commit
+
+## Comment lancer le projet
+
+le projet se lance avec Maven avec la commande : mvn javafx:run
