@@ -4,10 +4,11 @@ import java.time.LocalDate;
 
 /**
  * Classe de base pour un adhérent de la médiathèque.
- * NOTE : la logique de durée de prêt et de quota de documents est
- * volontairement dupliquée dans les sous-classes (voir Etudiant / Enseignant).
+ * Chaque sous-catégorie d'adhérent définit sa propre durée de prêt
+ * et son propre quota de documents ; la logique de validation
+ * (peutEmprunter) est commune et centralisée ici.
  */
-public class Adherent {
+public abstract class Adherent {
 
     private String nom;
     private String prenom;
@@ -39,5 +40,31 @@ public class Adherent {
 
     public String getNomComplet() {
         return prenom + " " + nom;
+    }
+
+    /**
+     * Durée maximale de prêt en jours, propre à chaque type d'adhérent.
+     */
+    public abstract int getDureeMaxPretJours();
+
+    /**
+     * Nombre maximal de documents empruntables simultanément,
+     * propre à chaque type d'adhérent.
+     */
+    public abstract int getNombreMaxDocuments();
+
+    /**
+     * Logique de validation commune à tous les adhérents.
+     */
+    public boolean peutEmprunter(int documentsActuellementEmpruntes) {
+        if (documentsActuellementEmpruntes < 0) {
+            System.out.println("Erreur : nombre de documents invalide pour " + this.getNomComplet());
+            return false;
+        }
+        if (documentsActuellementEmpruntes >= this.getNombreMaxDocuments()) {
+            System.out.println(this.getNomComplet() + " a atteint son quota de documents empruntes.");
+            return false;
+        }
+        return true;
     }
 }
