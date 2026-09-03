@@ -34,36 +34,28 @@ public class Emprunt {
         return rendu;
     }
 
-    /**
-     * Code smell (God Method) : cette méthode fait tout à la fois :
-     * - déterminer la durée max de prêt (via des instanceof au lieu du polymorphisme)
-     * - calculer le retard
-     * - calculer la pénalité via le polymorphisme
-     * - mettre à jour l'état de l'emprunt
-     * - construire un message de retour formaté
-     * À décomposer en plusieurs méthodes à responsabilité unique.
-     */
     public String traiterRetourEmprunt(LocalDate dateRetour) {
-        this.dateRetourEffective = dateRetour;
-        this.rendu = true;
-
-        int dureeMaxJours;
-        if (document instanceof Livre) {
-            dureeMaxJours = ((Livre) document).getDureeMaxPretJours();
-        } else if (document instanceof DVD) {
-            dureeMaxJours = ((DVD) document).getDureeMaxPretJours();
-        } else if (document instanceof JeuDeSociete) {
-            dureeMaxJours = ((JeuDeSociete) document).getDureeMaxPretJours();
-        } else {
-            dureeMaxJours = 14;
-        }
-
-        LocalDate dateRetourPrevue = dateEmprunt.plusDays(dureeMaxJours);
-        long joursRetardLong = ChronoUnit.DAYS.between(dateRetourPrevue, dateRetour);
-        int joursRetard = (int) joursRetardLong;
-
+        enregistrerRetour(dateRetour);
+        int joursRetard = calculerJoursRetard(dateRetour);
         double penalite = document.calculerPenalite(joursRetard);
 
+        return construireMessageRetour(joursRetard, penalite);
+    }
+
+    private void enregistrerRetour(LocalDate dateRetour) {
+        this.dateRetourEffective = dateRetour;
+        this.rendu = true;
+    }
+
+    private int calculerJoursRetard(LocalDate dateRetour) {
+        return (int) ChronoUnit.DAYS.between(calculerDateRetourPrevue(), dateRetour);
+    }
+
+    private LocalDate calculerDateRetourPrevue() {
+        return dateEmprunt.plusDays(document.getDureeMaxPretJours());
+    }
+
+    private String construireMessageRetour(int joursRetard, double penalite) {
         StringBuilder message = new StringBuilder();
         message.append("Retour de \"").append(document.getTitre()).append("\" par ")
                 .append(adherent.getNomComplet()).append(" : ");

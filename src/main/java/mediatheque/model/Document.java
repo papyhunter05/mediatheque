@@ -19,6 +19,13 @@ public class Document {
         return reference;
     }
 
+    /**
+     * Retourne la durée maximale d'un prêt pour ce type de document.
+     */
+    public int getDureeMaxPretJours() {
+        return 14;
+    }
+
     public double calculerPenalite(int joursRetard) {
         if (joursRetard <= 0) {
             return 0.0;

@@ -14,6 +14,7 @@ public class Livre extends Document {
         return auteur;
     }
 
+    @Override
     public int getDureeMaxPretJours() {
         return 14;
     }

@@ -14,6 +14,7 @@ public class DVD extends Document {
         return dureeMinutes;
     }
 
+    @Override
     public int getDureeMaxPretJours() {
         return 7;
     }
