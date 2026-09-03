@@ -2,6 +2,7 @@ package mediatheque.model;
 
 public class JeuDeSociete extends Document {
 
+    private static final double PLAFOND_PENALITE = 20.0;
     private int nombreJoueursMax;
 
     public JeuDeSociete(String titre, String reference, int nombreJoueursMax) {
@@ -17,15 +18,8 @@ public class JeuDeSociete extends Document {
         return 21;
     }
 
-    // Code smell : formule de pénalité copiée-collée une troisième fois
-    public double calculerPenalite(int joursRetard) {
-        if (joursRetard <= 0) {
-            return 0.0;
-        }
-        double penalite = joursRetard * 0.50;
-        if (penalite > 20.0) {
-            penalite = 20.0;
-        }
-        return penalite;
+    @Override
+    protected double getPlafondPenalite() {
+        return PLAFOND_PENALITE;
     }
 }
