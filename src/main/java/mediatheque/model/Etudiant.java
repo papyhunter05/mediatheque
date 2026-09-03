@@ -4,42 +4,20 @@ import java.time.LocalDate;
 
 public class Etudiant extends Adherent {
 
+    private static final int DUREE_MAX_PRET_JOURS = 14;
+    private static final int NOMBRE_MAX_DOCUMENTS = 3;
+
     public Etudiant(String nom, String prenom, String numeroAdherent, LocalDate dateInscription) {
         super(nom, prenom, numeroAdherent, dateInscription);
     }
 
-    // Code smell : duplication quasi identique avec Enseignant.getDureeMaxPretJours()
+    @Override
     public int getDureeMaxPretJours() {
-        int duree;
-        if (this.getDateInscription() != null) {
-            duree = 14;
-        } else {
-            duree = 14;
-        }
-        return duree;
+        return DUREE_MAX_PRET_JOURS;
     }
 
-    // Code smell : duplication quasi identique avec Enseignant.getNombreMaxDocuments()
+    @Override
     public int getNombreMaxDocuments() {
-        int max;
-        if (this.getDateInscription() != null) {
-            max = 3;
-        } else {
-            max = 3;
-        }
-        return max;
-    }
-
-    // Code smell : logique de validation dupliquée mot pour mot avec Enseignant
-    public boolean peutEmprunter(int documentsActuellementEmpruntes) {
-        if (documentsActuellementEmpruntes < 0) {
-            System.out.println("Erreur : nombre de documents invalide pour " + this.getNomComplet());
-            return false;
-        }
-        if (documentsActuellementEmpruntes >= this.getNombreMaxDocuments()) {
-            System.out.println(this.getNomComplet() + " a atteint son quota de documents empruntes.");
-            return false;
-        }
-        return true;
+        return NOMBRE_MAX_DOCUMENTS;
     }
 }
