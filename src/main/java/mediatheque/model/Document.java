@@ -1,10 +1,6 @@
 package mediatheque.model;
 
-/**
- * Classe de base pour un document empruntable.
- * NOTE : le calcul de pénalité est volontairement dupliqué dans chaque
- * sous-classe (Livre, DVD, JeuDeSociete) au lieu d'être centralisé ici.
- */
+
 public class Document {
 
     private String titre;
@@ -21,5 +17,16 @@ public class Document {
 
     public String getReference() {
         return reference;
+    }
+
+    public double calculerPenalite(int joursRetard) {
+        if (joursRetard <= 0) {
+            return 0.0;
+        }
+        return Math.min(joursRetard * 0.50, getPlafondPenalite());
+    }
+
+    protected double getPlafondPenalite() {
+        return 0.0;
     }
 }

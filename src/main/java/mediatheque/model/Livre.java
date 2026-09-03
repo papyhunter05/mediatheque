@@ -2,6 +2,7 @@ package mediatheque.model;
 
 public class Livre extends Document {
 
+    private static final double PLAFOND_PENALITE = 15.0;
     private String auteur;
 
     public Livre(String titre, String reference, String auteur) {
@@ -17,15 +18,8 @@ public class Livre extends Document {
         return 14;
     }
 
-    // Code smell : formule de pénalité dupliquée dans DVD et JeuDeSociete
-    public double calculerPenalite(int joursRetard) {
-        if (joursRetard <= 0) {
-            return 0.0;
-        }
-        double penalite = joursRetard * 0.50;
-        if (penalite > 15.0) {
-            penalite = 15.0;
-        }
-        return penalite;
+    @Override
+    protected double getPlafondPenalite() {
+        return PLAFOND_PENALITE;
     }
 }
